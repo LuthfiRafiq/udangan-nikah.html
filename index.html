@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ransomware</title>
+
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#000000">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+body{
+    min-height:100vh;
+    background:url(hq720.jpg) center/cover no-repeat;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    color:#fff;
+}
+.title{
+    position:absolute;
+    top: 30%;
+    top:30px;
+    font-size:60px;
+    color:red;
+    text-shadow:0 0 15px red;
+}
+.waper{
+    position: absolute;
+    top: 20%;
+    background:rgba(0,0,0,.7);
+    padding: 25px;
+    border:2px solid red;
+    width:380px;
+}
+.waper h1{
+    font-size:16px;
+    margin-bottom:15px;
+}
+.input_box{
+    display:flex;
+    gap:10px;
+}
+.input_box input{
+    flex:1;
+    padding:8px;
+}
+.Submit{
+    padding:8px 12px;
+    cursor:pointer;
+}
+.payment-panel,
+.encrypt-panel{  
+    right:20px;
+    background:rgba(0,0,0,.7);
+    border:1px solid red;
+    padding:15px;
+    width:240px;
+}
+.payment-panel{
+    position: absolute;
+    top: 61%;
+    left: 44%;
+}
+.encrypt-panel{
+    position: absolute;
+    left: 40%;
+    width: 378px;
+}
+.file-list{
+    margin-top:10px;
+    font-size:13px;
+    margin-left: 14px;
+}
+
+.version-label{
+    position:fixed;
+    left:10px;
+    bottom:10px;
+    font-size:12px;
+    color:#aaa;
+    background:rgba(0,0,0,.6);
+    padding:6px 10px;
+    border:1px solid red;
+    letter-spacing:1px;
+    user-select:none;
+}
+
+
+/* ===== HP RESPONSIVE ===== */
+@media (max-width:600px){
+    body{
+        padding:10px;
+    }
+    .title{
+        font-size:32px;
+        top:10px;
+        font-size: 60px;
+        width:100%;
+        text-align:center;
+    }
+    .waper{
+        position: absolute;
+        top: 10%;
+        width:100%;
+        max-width:340px;
+        padding:15px;
+    }
+    .waper h1{
+        font-size:14px;
+        text-align:center;
+    }
+    .input_box{
+        flex-direction:column;
+    }
+    .Submit{
+        width:100%;
+    }
+    .payment-panel {
+        position: absolute;
+        top: 50%;
+        left: 29%;
+    }
+    .encrypt-panel{
+        position: absolute;
+        top: 30%;
+        width:340px;
+        height: 167px;
+        left: 19%;
+        font-size:12px;
+    }
+    .version-label{
+    position:fixed;
+    left:10px;
+    bottom:10px;
+    font-size:12px;
+    color:#aaa;
+    background:rgba(0,0,0,.6);
+    padding:6px 10px;
+    border:1px solid red;
+    letter-spacing:1px;
+    user-select:none;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<h1 class="title">Ransomware</h1>
+
+<div class="waper">
+    <form>
+        <h1>Sistem Anda telah terenkripsi. Masukkan Key untuk membukanya</h1>
+        <div class="input_box">
+            <input type="text" placeholder="Masukkan Key" required>
+            <button class="Submit">Submit</button>
+        </div>
+    </form>
+</div>
+
+<div class="payment-panel">
+    <h2>Payment Method</h2>
+    <p>💰 Bitcoin — Unavailable</p>
+    <p>🪙 Ethereum — Unavailable</p>
+</div>
+
+<div class="encrypt-panel">
+    <div>Encrypting files...</div>
+    <ul class="file-list">
+        <li>document.docx</li>
+        <li>photo.png</li>
+        <li>video.mp4</li>
+        <li>database.sql</li>
+        <li>backup.zip</li>
+    </ul>
+</div>
+
+<div class="version-label" id="versionLabel">
+    Version: v?.?.?-XXXX
+</div>
+
+
+<audio id="virusSound" src="ssstik.io_@.azure465_1767077521076.mp3" loop preload="auto"></audio>
+
+<script>
+document.addEventListener("DOMContentLoaded", ()=>{
+
+    // FIX HEIGHT MOBILE
+    function fixVH(){
+        document.body.style.minHeight = window.innerHeight + "px";
+    }
+    fixVH();
+    window.addEventListener("resize", fixVH);
+
+    function generateKey(len=8){
+        const chars="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        return Array.from({length:len},()=>chars[Math.floor(Math.random()*chars.length)]).join("");
+    }
+    const KEY = generateKey();
+    console.log("Key:", KEY);
+
+    // TIMER 24 JAM
+    const end = Date.now() + 24*60*60*1000;
+    const timer = document.createElement("p");
+    document.querySelector(".waper h1").after(timer);
+
+    setInterval(()=>{
+        const s = Math.max(0, end-Date.now());
+        const h = Math.floor(s/3600000);
+        const m = Math.floor(s%3600000/60000);
+        const d = Math.floor(s%60000/1000);
+        timer.textContent = `Sisa waktu: ${h}j ${m}m ${d}d`;
+    },1000);
+
+
+    // EFEK FILE
+    const list = document.querySelector(".file-list");
+    const files = ["system32.dll","config.sys","secret.txt","wallet.dat"];
+    let i=0;
+    setInterval(()=>{
+        if(i<files.length){
+            const li=document.createElement("li");
+            li.textContent=files[i]+" [ENCRYPTED]";
+            list.prepend(li);
+            if(list.children.length>6) list.lastChild.remove();
+            i++;
+        }
+    },1200);
+
+    // SUBMIT
+    const form=document.querySelector("form");
+    const input=form.querySelector("input");
+    const msg=document.querySelector(".waper h1");
+
+    form.addEventListener("submit",e=>{
+        e.preventDefault();
+        if(input.value===KEY){
+            msg.textContent="Sistem berhasil dibuka ✅";
+            msg.style.color="lime";
+            setTimeout(()=>location.href="about:blank",2000);
+        }else{
+            msg.textContent="Key salah ❌";
+            msg.style.color="red";
+        }
+        input.value="";
+    });
+
+    // FULLSCREEN + AUDIO
+    const audio=document.getElementById("virusSound");
+    document.addEventListener("click",()=>{
+        document.documentElement.requestFullscreen().catch(()=>{});
+        audio.play().catch(()=>{});
+    },{once:true});
+    document.getElementById("versionLabel").textContent = "Version: " + KEY;
+
+});
+
+</script>
+
+</body>
+</html>
